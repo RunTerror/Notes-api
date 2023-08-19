@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const SECRET_KEY="NOTES_API";
 
 const jwt=require('jsonwebtoken');
-const { use } = require('bcrypt/promises');
 
 const signUp = async (req, res) => {
     const {email, password, username}=await req.body;
@@ -66,18 +65,15 @@ const signIn = async (req, res) => {
         return res.status(400).json("wrong credentials");
     }
 
-    const token=jwt.sign({email: email, username: existingUser.username, userId: existingUser.userId},SECRET_KEY);
+    const token=jwt.sign({email: email, username: existingUser.username,userid: existingUser._id},SECRET_KEY);
     res.status(200).json({
         token: token,
-        user: existingUser
+           user: existingUser
     });
         
     } catch (error) {
         console.log(error);
     }
-
-    
-
 }
 
 
